@@ -1,44 +1,29 @@
 import React from 'react';
-
-// max-w-screen-xl mx-auto
+import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 
 const Header = () => {
+  const navLinkStyles = ({ isActive }) => ({
+    backgroundColor: isActive ? '#2a2a2a' : '#1d1d1d',
+    color: isActive ? '#b9dc0c' : '#919191'
+  });
+  
   return (
-    <header>
-      <nav className='text-[#919191]'>
-        <div className='bg-[#1d1d1d] text-sm'>
-          <div className='flex justify-between items-center border max-w-screen-xl mx-auto'>
-            <div>
-              <span>Logo</span>
-              <span className='text-white'>Met Office</span>
-            </div>
-            <div className='flex items-center'>
-              <span className='border pt-3 pb-5 px-3 text-[#8ea724]'>Weather & climate</span>
-              <span className='border pt-3 pb-5 px-3'>Research programmes</span>
-              <span className='border pt-3 pb-5 px-3'>Services</span>
-              <span className='border pt-3 pb-5 px-3'>About us</span>
-            </div>
+    <>
+      <header className='bg-[#1d1d1d] text-[#919191] text-sm'>
+        <nav className='flex pl-[16px] pr-[106px] justify-between items-center max-w-screen-xl mx-auto'>
+          <div className='w-[108px]'>
+            <img alt='Met Office' src='https://www.metoffice.gov.uk/webfiles/1704798105601/images/logos/mo-green-white.svg' />
           </div>
-        </div>
-        <div className='bg-[#2a2a2a]'>
-          <div className='flex items-center justify-between border max-w-screen-xl mx-auto'>
-            <div className='flex items-center'>
-              <span className='border'>Find a forecast</span>
-              <span className='border'>Warnings & advice</span>
-              <span className='border'>Maps & charts</span>
-              <span className='border'>Climate</span>
-              <span className='border'>Specialist forecasts</span>
-              <span className='border'>Learn about...</span>
-            </div>
-            <div>
-              <span>Logo1</span>
-              <span>Logo2</span>
-            </div>
+          <div className='flex items-center'>
+            <NavLink style={navLinkStyles} to="/" className='p-4'>Weather & climate</NavLink>
+            <NavLink style={navLinkStyles} to="/research" className='p-4'>Research programmes</NavLink>
+            <NavLink style={navLinkStyles} to="/services" className='p-4'>Services</NavLink>
+            <NavLink style={navLinkStyles} to="/about" className='p-4'>About us</NavLink>
           </div>
-        </div>
-      </nav>
-
-    </header>
+        </nav>
+      </header>
+      <Outlet />
+    </>
   )
 }
 
