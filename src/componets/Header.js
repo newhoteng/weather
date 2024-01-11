@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const Header = () => {
   const navLinkStyles = ({ isActive }) => ({
