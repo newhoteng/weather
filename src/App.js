@@ -4,7 +4,7 @@ import Header from "./componets/Header";
 
 function App() {
   return (
-    <div className=" border border-red-600">
+    <div className="border border-red-600">
         <Header />
     </div>
   );
