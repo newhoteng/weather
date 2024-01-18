@@ -2,17 +2,38 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoMdSearch } from "react-icons/io";
 import HomePageNav from './HomePageNav';
 import { cities } from '../data/cities';
+import axios from 'axios';
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [fetchedData, setFetchedData] = useState({});
+
+  const Key = process.env.WEATHER_API_KEY
+  const Url = `https://api.weatherstack.com/forecast ? access_key = ${Key} & query = New York & forecast_days = 7 & hourly = 1`
+
 
   const matched = cities.filter((city) => city.name.toLowerCase().includes(searchTerm.trim().toLowerCase()));
 
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
-    if (searchTerm !== '') {
+    // const city = matched[0];
+    const city = 'New York'
+
+    try {
+      // const response = await fetch(`https://api.weatherstack.com/forecast?access_key=${Key}&query=${city.name}&forecast_days=7&hourly=1`)
+      const resp = await axios(`http://api.weatherstack.com/forecast?access_key=${Key}&query=${city}`);
+      const { data } = resp;
+      // const response = await fetch(`http://api.weatherstack.com/forecast?access_key=${Key}&query=${city}`)
+      // const data = response.json();
+      console.log(data)
+      return data;
+    } catch(error) {
+
     }
-    console.log(matched)
+    // if (searchTerm !== '') {
+    // }
+
+    console.log(city)
   }
 
   const handleClick = (e) => {
