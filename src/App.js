@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from "./componets/Header";
-import HomePage from './componets/HomePage';
-import Research from './componets/Research';
-import Services from './componets/Services';
-import About from './componets/About';
+// import Header from "./componets/Header";
+import Header from './components/Header';
+import HomePage from './components/HomePage';
+import Research from './components/Research';
+import Services from './components/Services';
+import About from './components/About';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/weather">
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<HomePage />} />
