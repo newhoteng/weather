@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdSearch } from "react-icons/io";
 import HomePageNav from './HomePageNav';
 import { cities } from '../data/cities';
