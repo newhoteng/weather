@@ -16,3 +16,28 @@ export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (
     return thunkAPI.rejectWithValue('something went wrong');
   }
 });
+
+const weatherSlice = createSlice({
+  name: 'weather',
+  initialState,
+  reducers: {
+    
+  },
+  extraReducers: (builder) => {
+    // getWeatherData
+    builder.addCase(getWeatherData.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getWeatherData.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.weatherData = action.payload;
+    });
+    builder.addCase(getWeatherData.rejected, (state, action) => {
+      state.error = action.payload;
+      state.isLoading = false;
+    });
+  },
+});
+
+// export const { addBook, removeBook } = booksSlice.actions;
+export default weatherSlice.reducer;
