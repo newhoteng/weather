@@ -8,7 +8,7 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [fetchedData, setFetchedData] = useState({});
 
-  const Key = process.env.WEATHER_API_KEY
+  const Key = process.env.REACT_APP_API_KEY;
   const Url = `https://api.weatherstack.com/forecast ? access_key = ${Key} & query = New York & forecast_days = 7 & hourly = 1`
 
 
@@ -21,12 +21,13 @@ const HomePage = () => {
 
     try {
       // const response = await fetch(`https://api.weatherstack.com/forecast?access_key=${Key}&query=${city.name}&forecast_days=7&hourly=1`)
+      // const resp = await axios('http://api.weatherstack.com/forecast?access_key=dc3318240c4b7a68c82957200c08652a&query=New York')
       const resp = await axios(`http://api.weatherstack.com/forecast?access_key=${Key}&query=${city}`);
       const { data } = resp;
       // const response = await fetch(`http://api.weatherstack.com/forecast?access_key=${Key}&query=${city}`)
       // const data = response.json();
       console.log(data)
-      return data;
+      // return data;
     } catch(error) {
 
     }
