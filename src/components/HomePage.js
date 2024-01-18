@@ -6,7 +6,9 @@ import axios from 'axios';
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [fetchedData, setFetchedData] = useState({});
+  const [fetchedData, setFetchedData] = useState(null);
+
+  const currentDate = new Date().toDateString();
 
   const sampleData = {
     "request": {
@@ -128,11 +130,12 @@ const HomePage = () => {
           )}
         </div>
         {fetchedData && (
+          
           <div className='border absolute bottom-0 bg-white flex p-5 w-[400px]'>
             <div className='border-r pr-4 w-1/2'>
               <h5 className='text-xl'>Today</h5>
               <div className='flex items-center gap-2'>
-                <p className='p-1 text-lg'>2&#176;</p>
+                <p className='p-1 text-lg'>{fetchedData.current?.temperature}&#176;</p>
                 <p className='p-1 text-gray-500'>3&deg;</p>
               </div>
               <div className='flex justify-between pt-3'>
