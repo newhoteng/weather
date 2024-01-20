@@ -9,8 +9,7 @@ const initialState = {
 
 export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (city, thunkAPI) => {
   try {
-    // const resp = await axios(`http://api.weatherstack.com/forecast?access_key=dc3318240c4b7a68c82957200c08652a&query=${city}`)
-    const resp = await axios(`http://api.weatherstack.com/forecast?access_key=dc3318240c4b7a68c82957200c08652a&query=Accra`)
+    const resp = await axios(`http://api.weatherstack.com/forecast?access_key=dc3318240c4b7a68c82957200c08652a&query=${city}`)
     const { data } = resp;
 
     console.log(data);
@@ -18,15 +17,6 @@ export const getWeatherData = createAsyncThunk('weather/getWeatherData', async (
     if ('success' in data) {
       return
     }
-
-    // const dateString = data.location?.localtime.split(' ')[0]
-    // const currentDate = new Date(dateString);
-             
-    // Instantiate another object (based on the current), so we won't mutate the currentDate object
-    // let yesterday = new Date(currentDate)
-    // yesterday.setDate(yesterday.getDate() - 1)
-    // const formattedDate = yesterday.toISOString().split('T')[0]
-    // console.log(formattedDate)
 
     return data;
   } catch (error) {
@@ -59,5 +49,4 @@ const weatherSlice = createSlice({
   },
 });
 
-// export const { addBook, removeBook } = booksSlice.actions;
 export default weatherSlice.reducer;
