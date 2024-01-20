@@ -12,7 +12,24 @@ const HomePage = () => {
   // const [fetchedData, setFetchedData] = useState(null);
 
   const { weatherData } = useSelector((store) => store.weather);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  let forecastDate = ''
+
+  if (weatherData) {
+    const dateString = weatherData.location.localtime.split(' ')[0]
+    const currentDate = new Date(dateString);
+             
+    // Instantiate another object (based on the current), so we won't mutate the currentDate object
+    let yesterday = new Date(currentDate)
+    yesterday?.setDate(yesterday.getDate() - 1)
+    forecastDate = yesterday?.toISOString().split('T')[0]
+    console.log(forecastDate)
+  }
+
+          
+  // console.log(formattedDate)
+  // console.log(yesterday.toISOString().split('T')[0])
 
   // const currentDate = new Date().toDateString();
 
@@ -78,9 +95,6 @@ const HomePage = () => {
   //   }
   // }
 
-  // http://localhost:3000/weather
-  // http://localhost:3000/weather
-
   const matched = cities.filter((city) => city.name.toLowerCase().includes(searchTerm.trim().toLowerCase())).slice(0, 5);
 
   const handleSumbit = async (e) => {
@@ -88,17 +102,7 @@ const HomePage = () => {
     const city = matched[0];
     dispatch(getWeatherData(city.name));
     console.log(city.name)
-    console.log(weatherData);
-
-    // try {
-    //   const resp = await axios(`http://api.weatherstack.com/forecast?access_key=dc3318240c4b7a68c82957200c08652a&query=${city.name}`)
-    //   const { data } = resp;
-    //   setFetchedData(data)
-    //   console.log(fetchedData)
-
-    // } catch(error) {
-
-    // }
+    // console.log(weatherData);
   }
 
   const handleClick = (e) => {
@@ -142,30 +146,30 @@ const HomePage = () => {
           )}
         </div>
         {/* <FetchedWeather /> */}
-        {weatherData && (
+        {(weatherData && forecastDate !== '') && (
           <div className='border absolute bottom-0 bg-white flex p-5 w-[400px]'>
             <div className='border-r pr-4 w-1/2'>
-              <h5 className='text-xl'>Today</h5>
+              <h5 className='text-xl'>Today ({weatherData.location?.name})</h5>
               <div className='flex items-center gap-2'>
-                <p className='p-1 text-lg'>{weatherData.current?.temperature}&#176;</p>
-                <p className='p-1 text-gray-500'>3&deg;</p>
+                <p className='p-1 text-lg'>{weatherData.forecast?.[forecastDate].maxtemp}&#176;</p>
+                <p className='p-1 text-gray-500'>{weatherData.forecast?.[forecastDate].mintemp}&deg;</p>
               </div>
               <div className='flex justify-between pt-3'>
                 <div>
                   <h6 className='font-semibold'>Sunrise:</h6>
-                  <p>08:20</p>
+                  <p>{weatherData.forecast?.[forecastDate].astro?.sunrise}</p>
                 </div>
                 <div>
                   <h6 className='font-semibold'>Sunset:</h6>
-                  <p>16:14</p>
+                  <p>{weatherData.forecast?.[forecastDate].astro?.sunset}</p>
                 </div>
               </div>
             </div>
             <div className='px-4 flex flex-col justify-between'>
-              <h5 className='text-gray-500 text-sm'>Clear</h5>
+              <h5 className='text-gray-500 text-sm'>{weatherData.current.weather_descriptions[0]}</h5>
               <div className='flex items-center justify-center gap-2'>
-                <p className='border border-black w-6 h-6 flex items-center justify-center bg-yellow-300'>M</p>
-                <p>UV</p>
+                <p className='flex items-center justify-center font-semibold'>UV index:</p>
+                <p>{weatherData.forecast?.[forecastDate].uv_index}</p>
               </div>
             </div>
           </div>
